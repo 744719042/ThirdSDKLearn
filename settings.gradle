@@ -1,1 +1,1 @@
-include ':app', ':myknife', ':myknife-annotation', ':myknife-compiler'
+include ':app', ':myknife', ':myknife-annotation', ':myknife-compiler', ':order'

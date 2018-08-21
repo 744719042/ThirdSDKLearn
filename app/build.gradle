@@ -36,15 +36,36 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
+    /**
+     * greendao
+     */
     implementation 'org.greenrobot:greendao:3.2.2'
     implementation 'com.facebook.stetho:stetho:1.5.0'
 
+    /**
+     * okhttp
+     */
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+
+    /**
+     * aspectj
+     */
     implementation 'org.aspectj:aspectjrt:1.8.1'
 
+    /**
+     * butterknife
+     */
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    /**
+     * 模拟的butterknife
+     */
     implementation project(':myknife')
     implementation project(':myknife-annotation')
     annotationProcessor project(':myknife-compiler')
+
+    implementation project(':order')
 }
 
 final def log = project.logger
@@ -67,8 +88,8 @@ variants.all { variant ->
                          "-bootclasspath", project.android.bootClasspath.join(File.pathSeparator)]
         log.debug "ajc args: " + Arrays.toString(args)
 
-        MessageHandler handler = new MessageHandler(true);
-        new Main().run(args, handler);
+        MessageHandler handler = new MessageHandler(true)
+        new Main().run(args, handler)
         for (IMessage message : handler.getMessages(null, true)) {
             switch (message.getKind()) {
                 case IMessage.ABORT:

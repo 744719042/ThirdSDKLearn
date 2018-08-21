@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     Button okioButton;
     @BindViewId(R.id.btn_okhttp)
     Button okButton;
+    @BindViewId(R.id.btn_knife)
+    Button knifeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @OnClickListener({R.id.btn_db, R.id.btn_okhttp, R.id.btn_okio })
+    @OnClickListener({R.id.btn_db, R.id.btn_okhttp, R.id.btn_okio, R.id.btn_knife })
     public void onClick(View v) {
         if (v == dbButton) {
             Intent intent = new Intent(this, DatabaseActivity.class);
@@ -70,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         } else if (v == okButton) {
             Intent intent = new Intent(this, OkHttpActivity.class);
+            startActivity(intent);
+        } else if (v == knifeButton) {
+            Intent intent = new Intent(this, KnifeActivity.class);
             startActivity(intent);
         }
     }

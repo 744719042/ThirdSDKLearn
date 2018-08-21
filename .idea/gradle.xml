@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/myknife" />
             <option value="$PROJECT_DIR$/myknife-annotation" />
             <option value="$PROJECT_DIR$/myknife-compiler" />
+            <option value="$PROJECT_DIR$/order" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
