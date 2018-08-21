@@ -41,6 +41,10 @@ dependencies {
 
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'org.aspectj:aspectjrt:1.8.1'
+
+    implementation project(':myknife')
+    implementation project(':myknife-annotation')
+    annotationProcessor project(':myknife-compiler')
 }
 
 final def log = project.logger

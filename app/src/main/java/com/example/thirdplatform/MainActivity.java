@@ -12,24 +12,30 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.thirdplatform.aspect.CheckNet;
+import com.example.myknife.MyKnife;
+import com.example.myknife.annotation.BindViewId;
+import com.example.myknife.annotation.OnClickListener;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_WRITE_STORAGE = 100;
-    private Button dbButton;
-    private Button okioButton;
-    private Button okButton;
+    @BindViewId(R.id.btn_db)
+    Button dbButton;
+    @BindViewId(R.id.btn_okio)
+    Button okioButton;
+    @BindViewId(R.id.btn_okhttp)
+    Button okButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        dbButton = findViewById(R.id.btn_db);
-        dbButton.setOnClickListener(this);
-        okioButton = findViewById(R.id.btn_okio);
-        okioButton.setOnClickListener(this);
-        okButton = findViewById(R.id.btn_okhttp);
-        okButton.setOnClickListener(this);
+        MyKnife.bind(this);
+//        dbButton = findViewById(R.id.btn_db);
+//        dbButton.setOnClickListener(this);
+//        okioButton = findViewById(R.id.btn_okio);
+//        okioButton.setOnClickListener(this);
+//        okButton = findViewById(R.id.btn_okhttp);
+//        okButton.setOnClickListener(this);
     }
 
     @Override
@@ -54,8 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    @Override
-    @CheckNet
+    @OnClickListener({R.id.btn_db, R.id.btn_okhttp, R.id.btn_okio })
     public void onClick(View v) {
         if (v == dbButton) {
             Intent intent = new Intent(this, DatabaseActivity.class);

@@ -25,7 +25,8 @@
         <activity android:name=".OkHttpActivity" />
         <activity android:name=".OkioActivity" />
         <activity android:name=".EventBusActivity" />
-        <activity android:name=".DiskLruActivity"></activity>
+        <activity android:name=".DiskLruActivity" />
+        <activity android:name=".KnifeActivity" />
     </application>
 
 </manifest>
