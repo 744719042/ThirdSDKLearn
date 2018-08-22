@@ -16,6 +16,8 @@ import com.example.myknife.MyKnife;
 import com.example.myknife.annotation.BindViewId;
 import com.example.myknife.annotation.OnClickListener;
 
+import butterknife.BindView;
+
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_WRITE_STORAGE = 100;
     @BindViewId(R.id.btn_db)
@@ -26,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     Button okButton;
     @BindViewId(R.id.btn_knife)
     Button knifeButton;
+    @BindViewId(R.id.btn_http)
+    Button httpButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @OnClickListener({R.id.btn_db, R.id.btn_okhttp, R.id.btn_okio, R.id.btn_knife })
+    @OnClickListener({R.id.btn_db, R.id.btn_okhttp, R.id.btn_okio, R.id.btn_knife, R.id.btn_http })
     public void onClick(View v) {
         if (v == dbButton) {
             Intent intent = new Intent(this, DatabaseActivity.class);
@@ -75,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         } else if (v == knifeButton) {
             Intent intent = new Intent(this, KnifeActivity.class);
+            startActivity(intent);
+        } else if (v == httpButton) {
+            Intent intent = new Intent(this, HttpActivity.class);
             startActivity(intent);
         }
     }

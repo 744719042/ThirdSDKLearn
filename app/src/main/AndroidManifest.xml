@@ -27,6 +27,7 @@
         <activity android:name=".EventBusActivity" />
         <activity android:name=".DiskLruActivity" />
         <activity android:name=".KnifeActivity" />
+        <activity android:name=".HttpActivity"></activity>
     </application>
 
 </manifest>
