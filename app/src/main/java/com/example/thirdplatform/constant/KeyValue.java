@@ -1,7 +1,5 @@
 package com.example.thirdplatform.constant;
 
-import java.io.File;
-
 public class KeyValue {
     private String key;
     private Object value;
@@ -11,9 +9,9 @@ public class KeyValue {
         this.value = value;
     }
 
-    public KeyValue(String key, File value) {
+    public KeyValue(String key, Binary binary) {
         this.key = key;
-        this.value = value;
+        this.value = binary;
     }
 
     @Override

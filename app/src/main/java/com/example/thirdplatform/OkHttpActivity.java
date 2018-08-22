@@ -38,9 +38,9 @@ public class OkHttpActivity extends AppCompatActivity implements View.OnClickLis
                 @Override
                 public void run() {
                     OkHttpClient okHttpClient = new OkHttpClient();
-                    File file = new File(getCacheDir(),"hello.png");
+                    File file = new File(getCacheDir(),"hello.jpg");
                     try {
-                        InputStream inputStream = getAssets().open("ic_launcher.png");
+                        InputStream inputStream = getAssets().open("timg.jpg");
                         if (!file.exists()) {
                             file.createNewFile();
                             FileOutputStream fos = new FileOutputStream(file);

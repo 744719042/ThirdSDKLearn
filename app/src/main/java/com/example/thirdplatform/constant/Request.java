@@ -1,14 +1,10 @@
 package com.example.thirdplatform.constant;
 
 import android.text.TextUtils;
-import android.webkit.MimeTypeMap;
 
 import com.example.thirdplatform.okhttp.Method;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -49,8 +45,8 @@ public class Request {
         params.add(new KeyValue(key, value));
     }
 
-    public void addFile(String key, File file) {
-        params.add(new KeyValue(key, file));
+    public void addFile(String key, Binary binary) {
+        params.add(new KeyValue(key, binary));
     }
 
     public void setHeader(String name, String value) {
@@ -91,7 +87,7 @@ public class Request {
     public String getContentType() {
         if (!TextUtils.isEmpty(mContentType)) {
             return mContentType;
-        } else if (mEnableFormData || hasFile()) {
+        } else if (mEnableFormData || hasBinary()) {
             return "multipart/form-data; boundary=" + boundary;
         } else {
             return "application/x-www-form-urlencoded";
@@ -109,10 +105,10 @@ public class Request {
         return UUID.randomUUID().toString();
     }
 
-    public boolean hasFile() {
+    public boolean hasBinary() {
         for (KeyValue keyValue : params) {
             Object value = keyValue.getValue();
-            if (value instanceof File) {
+            if (value instanceof Binary) {
                 return true;
             }
         }
@@ -123,7 +119,7 @@ public class Request {
     public long getContentLength() {
         CounterOutputStream counterOutputStream = new CounterOutputStream();
         try {
-            if (!mEnableFormData && !hasFile()) {
+            if (!mEnableFormData && !hasBinary()) {
                 writeStringData(counterOutputStream);
             } else {
                 writeFormData(counterOutputStream);
@@ -138,8 +134,8 @@ public class Request {
         for (KeyValue keyValue : params) {
             String key = keyValue.getKey();
             Object value = keyValue.getValue();
-            if (value instanceof File) {
-                writeFormFileData(outputStream, key, (File) value);
+            if (value instanceof Binary) {
+                writeFormFileData(outputStream, key, (Binary) value);
             } else {
                 writeFormStringData(outputStream, key, (String) value);
             }
@@ -153,37 +149,28 @@ public class Request {
         builder.append(startBoundary).append("\r\n");
         builder.append("Content-Disposition: form-data; name=\"");
         builder.append(key).append("\"").append("\r\n");
-        builder.append("Content-Type: text/plain; charset=\"utf-8\"").append("\r\n");
+        builder.append("Content-Type: text/plain; charset=\"utf-8\"");
         builder.append("\r\n\r\n");
         builder.append(value);
         outputStream.write(builder.toString().getBytes("utf-8"));
     }
 
-    private void writeFormFileData(OutputStream outputStream, String key, File value) throws IOException {
-        String fileName = value.getName();
+    private void writeFormFileData(OutputStream outputStream, String key, Binary value) throws IOException {
+        String fileName = value.getFileName();
         StringBuilder builder = new StringBuilder();
         builder.append(startBoundary).append("\r\n");
         builder.append("Content-Disposition: form-data; name=\"");
         builder.append(key).append("\";").append(" filename=\"").append(fileName).append("\"").append("\r\n");
         builder.append("Content-Type: ");
-        String mimeType = "application/octet-stream";
-        if (MimeTypeMap.getSingleton().hasExtension(fileName)) {
-            String extension = MimeTypeMap.getFileExtensionFromUrl(fileName);
-            mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
-        }
-        builder.append(mimeType).append("\r\n");
-        builder.append("Content-Length: ").append(value.length());
+
+        builder.append(value.getMimeType()).append("\r\n");
+        builder.append("Content-Length: ").append(value.getBinaryLength());
         builder.append("\r\n\r\n");
         outputStream.write(builder.toString().getBytes("utf-8"));
         if (outputStream instanceof CounterOutputStream) {
-            ((CounterOutputStream) outputStream).write(value.length());
+            ((CounterOutputStream) outputStream).write(value.getBinaryLength());
         } else {
-            InputStream inputStream = new FileInputStream(value);
-            byte[] buffer = new byte[2048];
-            int length = 0;
-            while ((length = inputStream.read(buffer, 0, buffer.length)) != -1) {
-                outputStream.write(buffer, 0, length);
-            }
+            value.onWriteBinary(outputStream);
         }
     }
 
@@ -215,7 +202,7 @@ public class Request {
     }
 
     public void writeBody(OutputStream outputStream) throws IOException {
-        if (!mEnableFormData && !hasFile()) {
+        if (!mEnableFormData && !hasBinary()) {
             writeStringData(outputStream);
         } else {
             writeFormData(outputStream);

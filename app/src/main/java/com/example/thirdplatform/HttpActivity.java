@@ -6,9 +6,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.thirdplatform.constant.FileBinary;
 import com.example.thirdplatform.constant.HttpListener;
 import com.example.thirdplatform.constant.Logger;
 import com.example.thirdplatform.constant.NetConstants;
+import com.example.thirdplatform.constant.OnBinaryProgressListener;
 import com.example.thirdplatform.constant.Poster;
 import com.example.thirdplatform.constant.Request;
 import com.example.thirdplatform.constant.RequestExecutor;
@@ -196,9 +198,21 @@ public class HttpActivity extends AppCompatActivity implements View.OnClickListe
         ThreadUtils.execute(new Runnable() {
             @Override
             public void run() {
-                File file = new File(getCacheDir(),"hello.png");
+                File file = new File(getCacheDir(),"hello.jpg");
                 final Request request = new Request(NetConstants.getUploadUrl(), Method.POST);
-                request.addFile("file", file);
+                FileBinary fileBinary = new FileBinary(file);
+                fileBinary.setListener(new OnBinaryProgressListener() {
+                    @Override
+                    public void onProgress(int progress) {
+                        Logger.d("Current Progress: " + String.valueOf(progress));
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+                request.addFile("file", fileBinary);
                 request.addParam("name", "zhangsan");
                 RequestExecutor.INSTANCE.execute(request, new HttpListener() {
                     @Override
