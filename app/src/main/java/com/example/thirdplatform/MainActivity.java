@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     Button knifeButton;
     @BindViewId(R.id.btn_http)
     Button httpButton;
+    @BindViewId(R.id.btn_bitmap)
+    Button bitmapButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @OnClickListener({R.id.btn_db, R.id.btn_okhttp, R.id.btn_okio, R.id.btn_knife, R.id.btn_http })
+    @OnClickListener({R.id.btn_db, R.id.btn_okhttp, R.id.btn_okio, R.id.btn_knife, R.id.btn_http, R.id.btn_bitmap })
     public void onClick(View v) {
         if (v == dbButton) {
             Intent intent = new Intent(this, DatabaseActivity.class);
@@ -82,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         } else if (v == httpButton) {
             Intent intent = new Intent(this, HttpActivity.class);
+            startActivity(intent);
+        } else if (v == bitmapButton) {
+            Intent intent = new Intent(this, DiskLruActivity.class);
             startActivity(intent);
         }
     }

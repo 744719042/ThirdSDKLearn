@@ -13,4 +13,8 @@ public class NetConstants {
     public static String getUploadUrl() {
         return HTTP_URL + "/OkHttpServer/upload";
     }
+
+    public static String getImageUrl(String filename) {
+        return HTTP_URL + "/OkHttpServer/download?filename=" + filename;
+    }
 }

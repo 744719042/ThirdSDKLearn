@@ -43,4 +43,11 @@
         android:textAllCaps="false"
         android:text="HTTP测试" />
 
+    <Button
+        android:id="@+id/btn_bitmap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="Bitmap测试" />
+
 </LinearLayout>

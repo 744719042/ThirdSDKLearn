@@ -67,6 +67,7 @@ dependencies {
     annotationProcessor project(':myknife-compiler')
 
     implementation project(':order')
+    implementation 'com.jakewharton:disklrucache:2.0.2'
 }
 
 final def log = project.logger
