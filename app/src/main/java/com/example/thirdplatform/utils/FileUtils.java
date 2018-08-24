@@ -17,4 +17,20 @@ public class FileUtils {
         source.close();
         sink.close();
     }
+
+    public static File getDir(File parent, String dirName) {
+        File dir = new File(parent, dirName);
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+        return dir;
+    }
+
+    public static File getFile(File parent, String filename) throws IOException {
+        File file = new File(parent, filename);
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+        return file;
+    }
 }

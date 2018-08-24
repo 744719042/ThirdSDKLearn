@@ -1,18 +1,17 @@
 package com.example.thirdplatform.okhttp;
 
 public enum Method {
-    POST("POST"),
     GET("GET"),
+    POST("POST"),
     HEAD("HEAD"),
     DELETE("DELETE");
 
+    private String method;
     Method(String method) {
         this.method = method;
     }
 
-    private String method;
-
-    public String value() {
+    public String getValue() {
         return method;
     }
 
@@ -22,14 +21,6 @@ public enum Method {
     }
 
     public boolean isOutputMethod() {
-        switch (method) {
-            case "GET":
-            case "HEAD": {
-                return false;
-            }
-            default: {
-                return true;
-            }
-        }
+        return this == POST || this == DELETE;
     }
 }

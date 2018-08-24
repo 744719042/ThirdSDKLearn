@@ -26,8 +26,21 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.util.List;
 import java.util.Map;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import okio.BufferedSource;
 import okio.Okio;
@@ -54,10 +67,33 @@ public class HttpActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getRequest() {
-        RequestExecutor.INSTANCE.execute(new Request(NetConstants.getGetLoginUrl()), new HttpListener() {
+        HostnameVerifier hostnameVerifier = new HostnameVerifier() {
+            @Override
+            public boolean verify(String hostname, SSLSession session) {
+                Logger.e("hostname = " + hostname);
+                return true;
+            }
+        };
+
+        TrustManager trustManager = new MyTrustManager();
+        SSLSocketFactory sslSocketFactory = null;
+        try {
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, new TrustManager[] { trustManager }, new SecureRandom());
+            sslSocketFactory = sslContext.getSocketFactory();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+
+        Request request = new Request(NetConstants.getGetLoginUrl());
+        request.setHostnameVerifier(hostnameVerifier);
+        request.setSslSocketFactory(sslSocketFactory);
+        RequestExecutor.INSTANCE.execute(request, new HttpListener() {
             @Override
             public void onSuccess(Response response) {
-                Logger.d("Request Success");
+                Logger.d(response.data);
             }
 
             @Override
@@ -106,6 +142,41 @@ public class HttpActivity extends AppCompatActivity implements View.OnClickListe
                 executePost();
             }
         });
+    }
+
+    private static class MyTrustManager implements X509TrustManager {
+
+        @Override
+        public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+
+        }
+
+        @Override
+        public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+            CertificateFactory certificateFactory = CertificateFactory.getInstance("X509");
+            try {
+                X509Certificate certificate = (X509Certificate) certificateFactory
+                        .generateCertificate(MyApplication.getApplication().getAssets().open("Administrator.cer"));
+                X509Certificate server = chain[0];
+
+                if (certificate.getIssuerDN().equals(server.getIssuerDN())) {
+                    if (certificate.getPublicKey().equals(server.getPublicKey())) {
+                        certificate.checkValidity();
+                        Logger.e("Certificate Success");
+                        return;
+                    }
+                }
+
+                Logger.e("Certificate Error");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public X509Certificate[] getAcceptedIssuers() {
+            return new X509Certificate[0];
+        }
     }
 
     private void executePost() {
