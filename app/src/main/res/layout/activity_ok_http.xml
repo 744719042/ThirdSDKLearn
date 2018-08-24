@@ -31,4 +31,10 @@
         android:text="Https访问"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/download"
+        android:text="断点续传"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
