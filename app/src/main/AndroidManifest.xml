@@ -28,7 +28,10 @@
         <activity android:name=".DiskLruActivity" />
         <activity android:name=".KnifeActivity" />
         <activity android:name=".HttpActivity" />
-        <activity android:name=".RetrofitActivity"></activity>
+        <activity android:name=".RetrofitActivity" />
+        <activity android:name=".RxJavaActivity" />
+        <activity android:name=".rxjava.RxSampleActivity" />
+        <activity android:name=".RxJavaSampleActivity"></activity>
     </application>
 
 </manifest>

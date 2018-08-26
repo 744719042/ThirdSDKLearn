@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     Button bitmapButton;
     @BindViewId(R.id.btn_retrofit)
     Button retrofitButton;
+    @BindViewId(R.id.btn_rxjava)
+    Button rxjavaButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @OnClickListener({R.id.btn_db, R.id.btn_okhttp, R.id.btn_okio, R.id.btn_knife, R.id.btn_http, R.id.btn_bitmap, R.id.btn_retrofit })
+    @OnClickListener({R.id.btn_db, R.id.btn_okhttp, R.id.btn_okio, R.id.btn_knife,
+            R.id.btn_http, R.id.btn_bitmap, R.id.btn_retrofit, R.id.btn_rxjava })
     public void onClick(View v) {
         if (v == dbButton) {
             Intent intent = new Intent(this, DatabaseActivity.class);
@@ -92,6 +95,9 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         } else if (v == retrofitButton) {
             Intent intent = new Intent(this, RetrofitActivity.class);
+            startActivity(intent);
+        } else if (v == rxjavaButton) {
+            Intent intent = new Intent(this, RxJavaActivity.class);
             startActivity(intent);
         }
     }
