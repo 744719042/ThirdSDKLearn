@@ -35,6 +35,7 @@ public class RxJavaActivity extends AppCompatActivity implements View.OnClickLis
     private Button rxloadMask;
     private Button rxinterface;
     private Button rxjavaSample;
+    private Button rxjavaRetrofit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,8 @@ public class RxJavaActivity extends AppCompatActivity implements View.OnClickLis
         rxinterface.setOnClickListener(this);
         rxjavaSample = findViewById(R.id.rxjavaSample);
         rxjavaSample.setOnClickListener(this);
+        rxjavaRetrofit = findViewById(R.id.rxjavaRetrofit);
+        rxjavaRetrofit.setOnClickListener(this);
     }
 
     @Override
@@ -118,6 +121,9 @@ public class RxJavaActivity extends AppCompatActivity implements View.OnClickLis
             startActivity(intent);
         } else if (v == rxjavaSample) {
             Intent intent = new Intent(this, RxJavaSampleActivity.class);
+            startActivity(intent);
+        } else if (v == rxjavaRetrofit) {
+            Intent intent = new Intent(this, RxJavaRetrofitActivity.class);
             startActivity(intent);
         }
     }

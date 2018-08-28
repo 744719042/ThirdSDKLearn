@@ -31,7 +31,8 @@
         <activity android:name=".RetrofitActivity" />
         <activity android:name=".RxJavaActivity" />
         <activity android:name=".rxjava.RxSampleActivity" />
-        <activity android:name=".RxJavaSampleActivity"></activity>
+        <activity android:name=".RxJavaSampleActivity" />
+        <activity android:name=".RxJavaRetrofitActivity"></activity>
     </application>
 
 </manifest>
