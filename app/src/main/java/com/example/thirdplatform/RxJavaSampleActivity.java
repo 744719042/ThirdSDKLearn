@@ -368,19 +368,19 @@ public class RxJavaSampleActivity extends AppCompatActivity implements View.OnCl
                         }
                     });
         } else if (v == defer) {
-            Observable observable = Observable.defer(new Callable<ObservableSource>() {
-                @Override
-                public ObservableSource call() throws Exception {
-                    return Observable.just(100, 200, 300, 400);
-                }
-            });
-
-            observable.subscribe(new Consumer<Integer>() {
-                @Override
-                public void accept(Integer o) throws Exception {
-                    Log.e(TAG, String.valueOf(o));
-                }
-            });
+//            Observable observable = Observable.defer(new Callable<ObservableSource>() {
+//                @Override
+//                public ObservableSource call() throws Exception {
+//                    return Observable.just(100, 200, 300, 400);
+//                }
+//            });
+//
+//            observable.subscribe(new Consumer<Integer>() {
+//                @Override
+//                public void accept(Integer o) throws Exception {
+//                    Log.e(TAG, String.valueOf(o));
+//                }
+//            });
         } else if (v == last) {
             Observable.just(1, 2, 3, 4, 5)
                     .last(4)

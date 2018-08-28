@@ -44,21 +44,21 @@ public class SqliteDaoSupport<T> implements IDaoSupport<T> {
     }
 
     public static void createTable(SQLiteDatabase database, Class<?> entityClass, boolean ifNotExists) {
-        String constraint = ifNotExists? "if not exists ": "";
-        Field[] fields = entityClass.getDeclaredFields();
-        String sql = "create table " + constraint + entityClass.getSimpleName() + "(";
-        for (int i = 0; i < fields.length; i++) {
-            String typeName = getTypeName(fields[i].getType());
-            if (fields[i].getAnnotation(Id.class) != null) {
-                sql += fields[i].getName() + " " + typeName + " primary key, ";
-            } else if (i == fields.length - 1) {
-                sql += fields[i].getName() + " " + typeName + ")";
-            } else {
-                sql += fields[i].getName() + " " + typeName + ",";
-            }
-        }
-
-        database.execSQL(sql);
+//        String constraint = ifNotExists? "if not exists ": "";
+//        Field[] fields = entityClass.getDeclaredFields();
+//        String sql = "create table " + constraint + entityClass.getSimpleName() + "(";
+//        for (int i = 0; i < fields.length; i++) {
+//            String typeName = getTypeName(fields[i].getType());
+//            if (fields[i].getAnnotation(Id.class) != null) {
+//                sql += fields[i].getName() + " " + typeName + " primary key, ";
+//            } else if (i == fields.length - 1) {
+//                sql += fields[i].getName() + " " + typeName + ")";
+//            } else {
+//                sql += fields[i].getName() + " " + typeName + ",";
+//            }
+//        }
+//
+//        database.execSQL(sql);
     }
 
     private static String getTypeName(Class<?> type) {
