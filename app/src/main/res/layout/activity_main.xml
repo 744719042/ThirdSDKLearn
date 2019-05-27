@@ -63,4 +63,11 @@
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:text="RxJava测试" />
+
+    <Button
+        android:id="@+id/btn_router"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="ARouter测试" />
 </LinearLayout>

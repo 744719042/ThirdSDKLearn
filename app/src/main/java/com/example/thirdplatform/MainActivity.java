@@ -9,16 +9,23 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.alibaba.android.arouter.facade.Postcard;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.facade.callback.NavigationCallback;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.myknife.MyKnife;
 import com.example.myknife.annotation.BindViewId;
 import com.example.myknife.annotation.OnClickListener;
 
 import butterknife.BindView;
 
+@Route(path = "/app/index")
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
     private static final int REQUEST_WRITE_STORAGE = 100;
     @BindViewId(R.id.btn_db)
     Button dbButton;
@@ -36,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     Button retrofitButton;
     @BindViewId(R.id.btn_rxjava)
     Button rxjavaButton;
+    @BindViewId(R.id.btn_router)
+    Button routerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClickListener({R.id.btn_db, R.id.btn_okhttp, R.id.btn_okio, R.id.btn_knife,
-            R.id.btn_http, R.id.btn_bitmap, R.id.btn_retrofit, R.id.btn_rxjava })
+            R.id.btn_http, R.id.btn_bitmap, R.id.btn_retrofit, R.id.btn_rxjava, R.id.btn_router })
     public void onClick(View v) {
         if (v == dbButton) {
             Intent intent = new Intent(this, DatabaseActivity.class);
@@ -99,6 +108,18 @@ public class MainActivity extends AppCompatActivity {
         } else if (v == rxjavaButton) {
             Intent intent = new Intent(this, RxJavaActivity.class);
             startActivity(intent);
+        } else if (v == routerButton) {
+            ARouter.getInstance().build("/home/index").navigation(this, new NavigationCallback() {
+                @Override
+                public void onFound(Postcard postcard) {
+                    Log.e(TAG, "onFound: postcard = " + postcard);
+                }
+
+                @Override
+                public void onLost(Postcard postcard) {
+                    Log.e(TAG, "onLost: postcard = " + postcard);
+                }
+            });
         }
     }
 }

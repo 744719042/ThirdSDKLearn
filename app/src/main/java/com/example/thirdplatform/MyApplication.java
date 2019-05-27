@@ -3,6 +3,7 @@ package com.example.thirdplatform;
 import android.app.Application;
 import android.content.Context;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.thirdplatform.database.SQLiteDaoFactory;
 import com.facebook.stetho.Stetho;
 
@@ -17,6 +18,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         application = this;
+        ARouter.init(this);
 //        DownloadHelper.getInstance().init(this);
         SQLiteDaoFactory.getInstance(this);
         Stetho.initializeWithDefaults(this);

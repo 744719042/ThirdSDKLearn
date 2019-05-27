@@ -9,6 +9,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/home" />
+            <option value="$PROJECT_DIR$/login" />
             <option value="$PROJECT_DIR$/myknife" />
             <option value="$PROJECT_DIR$/myknife-annotation" />
             <option value="$PROJECT_DIR$/myknife-compiler" />
