@@ -16,7 +16,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [moduleName :project.getName() ]
+                arguments = [moduleName: project.getName()]
             }
         }
     }
@@ -103,6 +103,8 @@ dependencies {
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.1'
 
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation 'com.google.inject:guice:2.0-no_aop'
 
     implementation project(':home')
     implementation project(':login')

@@ -21,8 +21,6 @@ import com.example.myknife.MyKnife;
 import com.example.myknife.annotation.BindViewId;
 import com.example.myknife.annotation.OnClickListener;
 
-import butterknife.BindView;
-
 @Route(path = "/app/index")
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -45,18 +43,14 @@ public class MainActivity extends AppCompatActivity {
     Button rxjavaButton;
     @BindViewId(R.id.btn_router)
     Button routerButton;
+    @BindViewId(R.id.btn_guice)
+    Button guiceButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MyKnife.bind(this);
-//        dbButton = findViewById(R.id.btn_db);
-//        dbButton.setOnClickListener(this);
-//        okioButton = findViewById(R.id.btn_okio);
-//        okioButton.setOnClickListener(this);
-//        okButton = findViewById(R.id.btn_okhttp);
-//        okButton.setOnClickListener(this);
     }
 
     @Override
@@ -82,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClickListener({R.id.btn_db, R.id.btn_okhttp, R.id.btn_okio, R.id.btn_knife,
-            R.id.btn_http, R.id.btn_bitmap, R.id.btn_retrofit, R.id.btn_rxjava, R.id.btn_router })
+            R.id.btn_http, R.id.btn_bitmap, R.id.btn_retrofit, R.id.btn_rxjava, R.id.btn_router,
+            R.id.btn_guice })
     public void onClick(View v) {
         if (v == dbButton) {
             Intent intent = new Intent(this, DatabaseActivity.class);
@@ -120,6 +115,9 @@ public class MainActivity extends AppCompatActivity {
                     Log.e(TAG, "onLost: postcard = " + postcard);
                 }
             });
+        } else if (v == guiceButton) {
+            Intent intent = new Intent(this, GuiceActivity.class);
+            startActivity(intent);
         }
     }
 }
